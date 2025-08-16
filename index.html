@@ -1,35 +1,63 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>МГЕ Alliance News</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header>
-    <h1>МГЕ Alliance News</h1>
-    <nav>
-      <a href="#news">Последние новости</a> |
+    <div class="logo">MGE Alliance News</div>
+    <nav class="main-nav">
+      <a href="#news">Последние новости</a>
       <a href="#info">Справка о странах</a>
     </nav>
   </header>
+
   <main>
-    <section id="news">
-      <h2>Последние новости</h2>
+    <section class="hero">
+      <div class="hero-inner">
+        <h1>SpaceAge — военно-политический дайджест</h1>
+        <p class="lead">Оперативные сводки, аналитика и справки о ходе конфликта в вымышленном мире.</p>
+      </div>
     </section>
-    <section id="info">
+
+    <section id="news" class="news-section">
+      <div class="section-header">
+        <h2>Последние новости</h2>
+        <div class="nav-controls">
+          <button id="news-prev" class="nav-btn" aria-label="Назад">◀</button>
+          <button id="news-next" class="nav-btn" aria-label="Вперёд">▶</button>
+        </div>
+      </div>
+
+      <div class="news-viewport" id="news-viewport">
+        <div class="news-track" id="news-track">
+          <!-- Карточки новостей будут добавлены сюда скриптом -->
+        </div>
+      </div>
+
+      <div class="news-dots" id="news-dots"></div>
+    </section>
+
+    <section id="info" class="info-section">
       <h2>Справка о странах и альянсах</h2>
       <ul>
-        <li><strong>МГЕ</strong> – фашистско-либеральная империя, главный участник альянса. Здесь произошло восстание фурри, но правительство подавило бунт при поддержке прославленных «качков».</li>
+        <li><strong>МГЕ</strong> – фашистско-либеральная империя. В стране началось восстание фурри; оно было подавлено при участии известных «качков».</li>
         <li><strong>Сухарики</strong> – республика нейтралитета, союзник МГЕ и Бульбазаврии.</li>
         <li><strong>Бульбазаврия</strong> – нейтральное государство, союзник, планирует сменить название.</li>
-        <li><strong>Кириешки</strong> – коммунистическое государство, в ближайшее время ожидается переименование.</li>
-        <li><strong>Огурцы</strong> и <strong>Помидоры</strong> – мелкие страны-фракции без активного участия в текущем конфликте.</li>
-        <li><strong>Аксолотли</strong> – условные «водяные» союзники, сохраняют нейтралитет.</li>
+        <li><strong>Кириешки</strong> – коммунистическое государство, ожидается переименование.</li>
+        <li><strong>Огурцы</strong>, <strong>Аксолотли</strong>, <strong>Помидоры</strong> – мелкие государства, сохраняющие нейтралитет.</li>
       </ul>
       <p><em>Альянс:</em> МГЕ, Сухарики, Бульбазаврия.</p>
     </section>
   </main>
+
+  <footer>
+    <small>© МГЕ Alliance News — вымышленный мир</small>
+  </footer>
+
   <script src="script.js"></script>
 </body>
 </html>
