@@ -1,4 +1,4 @@
-// Загрузка и отображение списка статей; при клике открывается модальное окно с полным текстом
+// Скрипт с запасным (fallback) набором новостей — если fetch не сработает, показываем локальные новости
 document.addEventListener('DOMContentLoaded', () => {
   const articlesContainer = document.getElementById('articles');
   const modal = document.getElementById('modal');
@@ -8,8 +8,26 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalDate = document.getElementById('modal-date');
   const modalBody = document.getElementById('modal-body');
 
-  // helper: сокращение текста для превью (примерно 160 символов)
-  function excerpt(text, n = 160){
+  // Запасные новости (те же, что были в первой версии)
+  const fallbackNews = [
+    {
+      "title": "Восстание фурри в МГЕ подавлено",
+      "date": "2025-08-15",
+      "text": "Власти МГЕ объявили о завершении операции против восставших фурри. Как стало известно, в штурме участвовали элитные формирования поддержки и известные местные спортсмены («качки»). В МГЕ вводится комендантский час, армия союзников (Сухариков и Бульбазаврии) остаётся в состоянии повышенной боевой готовности."
+    },
+    {
+      "title": "Кириешки готовятся к переименованию страны",
+      "date": "2025-08-10",
+      "text": "По инициативе коммунистического правительства в Кириешках назначен референдум о смене названия страны. Предлагаются варианты вроде «Новые Кириешки» и «Советские Кириевци». Международные наблюдатели отмечают спокойную атмосферу – крупных протестов не наблюдается."
+    },
+    {
+      "title": "Союзники проводят совместные учения",
+      "date": "2025-08-01",
+      "text": "Сообщается, что армии МГЕ, Сухариков и Бульбазаврии проводят масштабные учения на границе с Кириешками. Официально это демонстрация силы и готовности к обороне. Жители приграничных городов эвакуируются, напряжение растёт."
+    }
+  ];
+
+  function excerpt(text, n = 180){
     if(text.length <= n) return text;
     return text.slice(0, n).trim() + '…';
   }
@@ -20,7 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
     modalBody.textContent = item.text;
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
-    // focus for accessibility
     modalClose.focus();
   }
 
@@ -31,39 +48,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
   modalBackdrop.addEventListener('click', closeModal);
   modalClose.addEventListener('click', closeModal);
-  window.addEventListener('keydown', (e) => {
-    if(e.key === 'Escape') closeModal();
-  });
+  window.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeModal(); });
 
-  // загрузка новостей
+  function renderArticles(list){
+    articlesContainer.innerHTML = '';
+    if(!Array.isArray(list) || list.length === 0){
+      articlesContainer.innerHTML = '<p style="color:var(--muted)">Пока нет доступных новостей.</p>';
+      return;
+    }
+    list.forEach(item => {
+      const el = document.createElement('article');
+      el.className = 'article';
+      el.tabIndex = 0;
+      const h = document.createElement('h3');
+      h.textContent = item.title;
+      const t = document.createElement('time');
+      t.textContent = item.date;
+      const p = document.createElement('p');
+      p.textContent = excerpt(item.text, 180);
+      el.appendChild(h);
+      el.appendChild(t);
+      el.appendChild(p);
+      el.addEventListener('click', () => openModal(item));
+      el.addEventListener('keydown', (e) => { if(e.key === 'Enter') openModal(item); });
+      articlesContainer.appendChild(el);
+    });
+  }
+
+  // Попытка загрузить news.json; при ошибке используем fallbackNews
   fetch('news.json')
-    .then(r => r.json())
+    .then(r => {
+      if(!r.ok) throw new Error('Network response was not ok');
+      return r.json();
+    })
     .then(data => {
+      // если пустой массив, используем запасные новости
       if(!Array.isArray(data) || data.length === 0){
-        articlesContainer.innerHTML = '<p style="color:var(--muted)">Пока нет доступных новостей.</p>';
-        return;
+        renderArticles(fallbackNews);
+      } else {
+        renderArticles(data);
       }
-      data.forEach(item => {
-        const el = document.createElement('article');
-        el.className = 'article';
-        el.tabIndex = 0;
-        const h = document.createElement('h3');
-        h.textContent = item.title;
-        const t = document.createElement('time');
-        t.textContent = item.date;
-        const p = document.createElement('p');
-        p.textContent = excerpt(item.text, 180);
-        el.appendChild(h);
-        el.appendChild(t);
-        el.appendChild(p);
-        // открываем модал при клике или Enter
-        el.addEventListener('click', () => openModal(item));
-        el.addEventListener('keydown', (e) => { if(e.key === 'Enter') openModal(item); });
-        articlesContainer.appendChild(el);
-      });
     })
     .catch(err => {
-      console.error('Ошибка загрузки новостей', err);
-      articlesContainer.innerHTML = '<p style="color:var(--muted)">Пока нет доступных новостей.</p>';
+      console.error('Ошибка загрузки новостей, используем локальные:', err);
+      renderArticles(fallbackNews);
     });
 });
