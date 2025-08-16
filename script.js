@@ -1,141 +1,69 @@
-// Основная логика: загружаем news.json, формируем карточки, реализуем навигацию
+// Загрузка и отображение списка статей; при клике открывается модальное окно с полным текстом
 document.addEventListener('DOMContentLoaded', () => {
-  const track = document.getElementById('news-track');
-  const viewport = document.getElementById('news-viewport');
-  const prevBtn = document.getElementById('news-prev');
-  const nextBtn = document.getElementById('news-next');
-  const dotsContainer = document.getElementById('news-dots');
+  const articlesContainer = document.getElementById('articles');
+  const modal = document.getElementById('modal');
+  const modalBackdrop = document.getElementById('modal-backdrop');
+  const modalClose = document.getElementById('modal-close');
+  const modalTitle = document.getElementById('modal-title');
+  const modalDate = document.getElementById('modal-date');
+  const modalBody = document.getElementById('modal-body');
 
-  let items = [];
-  let currentIndex = 0;
-
-  function createCard(item){
-    const card = document.createElement('article');
-    card.className = 'news-card';
-
-    const title = document.createElement('h3');
-    title.textContent = item.title;
-
-    const time = document.createElement('time');
-    time.textContent = item.date;
-
-    const text = document.createElement('p');
-    text.textContent = item.text;
-
-    const meta = document.createElement('div');
-    meta.className = 'meta';
-    meta.textContent = 'Подробнее →';
-
-    card.appendChild(title);
-    card.appendChild(time);
-    card.appendChild(text);
-    card.appendChild(meta);
-
-    return card;
+  // helper: сокращение текста для превью (примерно 160 символов)
+  function excerpt(text, n = 160){
+    if(text.length <= n) return text;
+    return text.slice(0, n).trim() + '…';
   }
 
-  function buildUI(newsList){
-    items = newsList;
-    track.innerHTML = '';
-    newsList.forEach(it => {
-      const c = createCard(it);
-      track.appendChild(c);
-    });
-
-    buildDots();
-    updateBtns();
+  function openModal(item){
+    modalTitle.textContent = item.title;
+    modalDate.textContent = item.date;
+    modalBody.textContent = item.text;
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    // focus for accessibility
+    modalClose.focus();
   }
 
-  function buildDots(){
-    dotsContainer.innerHTML = '';
-    const perView = getPerView();
-    const pages = Math.max(1, Math.ceil(items.length / perView));
-    for(let i=0;i<pages;i++){
-      const b = document.createElement('button');
-      if(i===0) b.classList.add('active');
-      b.addEventListener('click', ()=>{
-        goTo(i);
-      });
-      dotsContainer.appendChild(b);
-    }
+  function closeModal(){
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
   }
 
-  function getPerView(){
-    const vw = viewport.clientWidth;
-    return vw > 900 ? 2 : 1;
-  }
-
-  function updateBtns(){
-    const perView = getPerView();
-    const maxIndex = Math.max(0, Math.ceil(items.length / perView) - 1);
-    prevBtn.disabled = currentIndex <= 0;
-    nextBtn.disabled = currentIndex >= maxIndex;
-    Array.from(dotsContainer.children).forEach((btn, idx) => {
-      btn.classList.toggle('active', idx === currentIndex);
-    });
-  }
-
-  function goTo(pageIndex){
-    const perView = getPerView();
-    const shift = pageIndex * viewport.clientWidth;
-    track.style.transform = `translateX(-${shift}px)`;
-    currentIndex = pageIndex;
-    updateBtns();
-    createRipple(viewport);
-  }
-
-  function next(){
-    const perView = getPerView();
-    const pages = Math.max(1, Math.ceil(items.length / perView));
-    if(currentIndex < pages - 1){
-      goTo(currentIndex + 1);
-    } else {
-      createRipple(viewport);
-    }
-  }
-
-  function prev(){
-    if(currentIndex > 0){
-      goTo(currentIndex - 1);
-    } else {
-      createRipple(viewport);
-    }
-  }
-
-  function createRipple(container){
-    const rect = container.getBoundingClientRect();
-    const ripple = document.createElement('div');
-    ripple.className = 'ripple';
-    const size = Math.max(rect.width, rect.height) * 1.3;
-    ripple.style.width = ripple.style.height = size + 'px';
-    ripple.style.left = rect.width/2 + 'px';
-    ripple.style.top = rect.height/2 + 'px';
-    container.appendChild(ripple);
-    ripple.addEventListener('animationend', ()=> ripple.remove());
-  }
-
-  prevBtn.addEventListener('click', ()=>{
-    prev();
-  });
-  nextBtn.addEventListener('click', ()=>{
-    next();
+  modalBackdrop.addEventListener('click', closeModal);
+  modalClose.addEventListener('click', closeModal);
+  window.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape') closeModal();
   });
 
-  window.addEventListener('resize', ()=>{
-    goTo(currentIndex);
-    buildDots();
-  });
-
-  // Загружаем новости
+  // загрузка новостей
   fetch('news.json')
     .then(r => r.json())
     .then(data => {
-      buildUI(data);
-      setTimeout(()=> goTo(0), 80);
+      if(!Array.isArray(data) || data.length === 0){
+        articlesContainer.innerHTML = '<p style="color:var(--muted)">Пока нет доступных новостей.</p>';
+        return;
+      }
+      data.forEach(item => {
+        const el = document.createElement('article');
+        el.className = 'article';
+        el.tabIndex = 0;
+        const h = document.createElement('h3');
+        h.textContent = item.title;
+        const t = document.createElement('time');
+        t.textContent = item.date;
+        const p = document.createElement('p');
+        p.textContent = excerpt(item.text, 180);
+        el.appendChild(h);
+        el.appendChild(t);
+        el.appendChild(p);
+        // открываем модал при клике или Enter
+        el.addEventListener('click', () => openModal(item));
+        el.addEventListener('keydown', (e) => { if(e.key === 'Enter') openModal(item); });
+        articlesContainer.appendChild(el);
+      });
     })
     .catch(err => {
       console.error('Ошибка загрузки новостей', err);
-      // Не показываем текст ошибки пользователю — просто оставляем пустой трек
-      track.innerHTML = '';
+      articlesContainer.innerHTML = '<p style="color:var(--muted)">Пока нет доступных новостей.</p>';
     });
 });

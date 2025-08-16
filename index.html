@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Фронтовой Вестник</title>
+  <title>Новости из мира политики</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header>
-    <div class="logo">Фронтовой Вестник</div>
+    <div class="logo">Новости из мира политики</div>
     <nav class="main-nav">
       <a href="#news">Последние новости</a>
       <a href="#info">Справка о странах</a>
@@ -18,27 +18,16 @@
   <main>
     <section class="hero">
       <div class="hero-inner">
-        <h1>Фронтовой Вестник — оперативные сводки</h1>
+        <h1>Новости из мира политики — оперативные сводки</h1>
         <p class="lead">Оперативные сводки, аналитика и справки о ходе конфликта.</p>
       </div>
     </section>
 
     <section id="news" class="news-section">
-      <div class="section-header">
-        <h2>Последние новости</h2>
-        <div class="nav-controls">
-          <button id="news-prev" class="nav-btn" aria-label="Назад">◀</button>
-          <button id="news-next" class="nav-btn" aria-label="Вперёд">▶</button>
-        </div>
+      <h2>Последние новости</h2>
+      <div id="articles" class="articles-list">
+        <!-- Список статей подгружается скриптом -->
       </div>
-
-      <div class="news-viewport" id="news-viewport">
-        <div class="news-track" id="news-track">
-          <!-- Карточки новостей будут добавлены сюда скриптом -->
-        </div>
-      </div>
-
-      <div class="news-dots" id="news-dots"></div>
     </section>
 
     <section id="info" class="info-section">
@@ -55,8 +44,19 @@
   </main>
 
   <footer>
-    <small>© Фронтовой Вестник</small>
+    <small>© Новости из мира политики</small>
   </footer>
+
+  <!-- Модальное окно для детальной новости -->
+  <div id="modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+    <div class="modal-panel" role="document">
+      <button id="modal-close" class="modal-close" aria-label="Закрыть">✕</button>
+      <h3 id="modal-title"></h3>
+      <time id="modal-date"></time>
+      <div id="modal-body" class="modal-body"></div>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

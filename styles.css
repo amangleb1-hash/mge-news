@@ -1,18 +1,20 @@
-/* Общие стили */
+/* Базовые стили */
 :root{
-  --bg:#0f1113;
-  --card:#121417;
+  --bg:#0b0c0d;
+  --card:#101214;
   --muted:#9aa0a6;
   --accent:#b83a3a;
+  --glass: rgba(255,255,255,0.03);
 }
 *{box-sizing:border-box}
 body{
   margin:0;
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
   background: linear-gradient(180deg,#0b0c0d 0%, #151618 100%);
   color:#e6e9eb;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
+  line-height:1.5;
 }
 
 /* Header */
@@ -20,107 +22,76 @@ header{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:18px 48px;
-  background:linear-gradient(90deg, rgba(0,0,0,0.3), transparent);
+  padding:16px 40px;
+  background:linear-gradient(90deg, rgba(0,0,0,0.35), transparent);
   position:sticky;
   top:0;
-  z-index:30;
+  z-index:20;
 }
-.logo{font-weight:700; font-size:1.05rem; letter-spacing:0.6px}
+.logo{font-weight:700; font-size:1.05rem; letter-spacing:0.4px}
 .main-nav a{color:var(--muted); margin-left:18px; text-decoration:none}
 .main-nav a:hover{color:#fff}
 
 /* Hero */
 .hero{
-  min-height:420px;
+  min-height:260px;
   display:flex;
   align-items:center;
-  background-image: radial-gradient(circle at 20% 20%, rgba(184,58,58,0.08), transparent 10%), linear-gradient(90deg,#2b2d30, #0b0c0d);
-  padding:40px 48px;
+  background-image: radial-gradient(circle at 20% 20%, rgba(184,58,58,0.06), transparent 10%), linear-gradient(90deg,#232427, #0b0c0d);
+  padding:32px 40px;
 }
 .hero-inner{max-width:880px}
-.hero h1{font-size:3.5rem; margin:0 0 12px; color:#fff}
-.hero .lead{color:var(--muted); font-size:1.05rem; max-width:54ch}
+.hero h1{font-size:2rem; margin:0 0 8px; color:#fff}
+.hero .lead{color:var(--muted); font-size:1rem; max-width:60ch}
 
-/* News section */
-.news-section{padding:36px 48px; position:relative}
-.section-header{display:flex; align-items:center; justify-content:space-between; margin-bottom:18px}
-.section-header h2{margin:0; font-size:1.4rem}
-.nav-controls{display:flex; gap:8px; align-items:center}
-.nav-btn{background:transparent; border:1px solid rgba(255,255,255,0.06); color:var(--muted); padding:8px 12px; cursor:pointer; border-radius:6px; backdrop-filter: blur(4px)}
-.nav-btn:hover{color:#fff; border-color:rgba(255,255,255,0.12)}
+/* Новости - список статей */
+.news-section{padding:28px 40px}
+.news-section h2{margin:0 0 16px; font-size:1.3rem}
+.articles-list{display:flex; flex-direction:column; gap:14px}
 
-/* viewport */
-.news-viewport{overflow:hidden; position:relative; border-radius:12px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12)); padding:14px}
-.news-track{display:flex; gap:16px; transition: transform 600ms cubic-bezier(.2,.9,.3,1); will-change: transform;}
-
-/* card */
-.news-card{
-  min-width:320px;
-  flex: 0 0 45%; /* показывать примерно 2 карточки на ширине */
-  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.18));
+/* Обычная карточка статьи */
+.article{
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.14));
   border-radius:10px;
   padding:18px;
-  position:relative;
-  overflow:hidden;
   box-shadow: 0 6px 18px rgba(0,0,0,0.45);
-}
-.news-card h3{margin:0 0 8px; font-size:1.05rem; color:#fff}
-.news-card time{display:block; color:var(--muted); font-size:0.85rem; margin-bottom:10px}
-.news-card p{color:var(--muted); line-height:1.45; margin:0}
-
-/* правый миниатюрный блок внизу */
-.news-card .meta{position:absolute; right:12px; bottom:12px; font-size:0.75rem; color:var(--muted)}
-
-/* точки индикации */
-.news-dots{display:flex; gap:8px; justify-content:center; margin-top:12px}
-.news-dots button{width:10px; height:10px; border-radius:50%; border:none; background:rgba(255,255,255,0.08); cursor:pointer}
-.news-dots button.active{background:#fff; transform:scale(1.15)}
-
-/* ripple - круговая анимация */
-.ripple{
-  position:absolute;
-  border-radius:50%;
-  pointer-events:none;
-  background: radial-gradient(circle at center, rgba(255,255,255,0.18), rgba(255,255,255,0.06));
-  transform: translate(-50%,-50%) scale(0);
-  opacity:0.9;
-  animation: ripple-anim 700ms cubic-bezier(.2,.9,.3,1);
-}
-@keyframes ripple-anim{
-  0% { transform: translate(-50%,-50%) scale(0.02); opacity:0.9; }
-  60% { transform: translate(-50%,-50%) scale(0.9); opacity:0.5; }
-  100%{ transform: translate(-50%,-50%) scale(1.4); opacity:0; }
-}
-
-/* Интерактивные стрелки по бокам секции (крупные) - декоративные */
-.side-arrow{
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  width:52px; height:52px; border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
-  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.15));
-  border:1px solid rgba(255,255,255,0.04);
   cursor:pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+  border:1px solid rgba(255,255,255,0.02);
 }
-.side-arrow.left{left:6px}
-.side-arrow.right{right:6px}
-.side-arrow svg{width:18px; height:18px; fill:var(--muted)}
+.article:hover{ transform: translateY(-6px); box-shadow: 0 14px 30px rgba(0,0,0,0.6); }
+.article h3{margin:0 0 6px; font-size:1.05rem; color:#fff}
+.article time{display:block; color:var(--muted); font-size:0.85rem; margin-bottom:8px}
+.article p{color:var(--muted); margin:0}
 
 /* Info section */
-.info-section{padding:36px 48px; color:var(--muted)}
-.info-section ul{line-height:1.6}
-footer{padding:24px 48px; color:var(--muted); text-align:center; font-size:0.9rem}
+.info-section{padding:28px 40px; color:var(--muted)}
+.info-section ul{line-height:1.65}
+
+/* Modal стили */
+.modal{ display:none; position:fixed; inset:0; align-items:center; justify-content:center; z-index:2000 }
+.modal[aria-hidden="false"]{ display:flex }
+.modal-backdrop{ position:absolute; inset:0; background:rgba(0,0,0,0.6) }
+.modal-panel{
+  position:relative;
+  width:min(920px, 94%);
+  max-height:86vh;
+  overflow:auto;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.2));
+  border-radius:12px;
+  padding:22px 26px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.7);
+  border:1px solid rgba(255,255,255,0.04);
+}
+.modal-close{ position:absolute; right:12px; top:10px; background:transparent; border:none; color:var(--muted); font-size:18px; cursor:pointer }
+.modal h3{margin:0 0 8px; font-size:1.25rem}
+.modal time{display:block; color:var(--muted); margin-bottom:12px}
+.modal-body{ color:#e6e9eb; white-space:pre-wrap; line-height:1.65 }
+
+footer{padding:20px 40px; color:var(--muted); text-align:center; font-size:0.9rem}
 
 /* Responsive */
-@media (max-width:900px){
-  .hero h1{font-size:2rem}
-  .news-card{flex:0 0 80%; min-width:260px}
-}
-@media (max-width:520px){
-  header{padding:12px 18px}
-  .hero{padding:24px 18px}
-  .news-card{flex:0 0 92%}
-  .nav-controls{display:none}
+@media (max-width:720px){
+  .hero h1{font-size:1.4rem}
+  .modal-panel{ padding:16px; }
 }
