@@ -82,7 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
       return r.json();
     })
     .then(data => {
-      // если пустой массив, используем запасные новости
       if(!Array.isArray(data) || data.length === 0){
         renderArticles(fallbackNews);
       } else {
