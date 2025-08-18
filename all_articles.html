@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Все статьи — Новости из мира политики</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">Новости из мира политики</div>
+    <nav class="main-nav">
+      <a href="index.html">Главная</a>
+      <a href="#news">Все статьи</a>
+      <a href="#info">Справка о странах</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <h1>Архив статей</h1>
+        <p class="lead">Полный список всех публикаций.</p>
+      </div>
+    </section>
+
+    <section id="news" class="news-section">
+      <h2>Все статьи</h2>
+      <div id="articles" class="articles-list">
+        <!-- Здесь будут все статьи -->
+      </div>
+      <p style="margin-top:12px"><a href="index.html">← Вернуться на главную</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <small>© Новости из мира политики — независимый и нейтральный ресурс</small>
+  </footer>
+
+  <!-- Modal -->
+  <div id="modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+    <div class="modal-panel" role="document" aria-labelledby="modal-title" aria-describedby="modal-body">
+      <button id="modal-close" class="modal-close" aria-label="Закрыть">✕</button>
+      <h3 id="modal-title"></h3>
+      <time id="modal-date"></time>
+      <div id="modal-body" class="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>/* on this page render all articles */ window.SHOW_ALL = true;</script>
+</body>
+</html>

@@ -1,3 +1,4 @@
+
 :root{
   --bg:#0b0c0d;
   --card:#101214;
@@ -51,7 +52,7 @@ header{
   border:1px solid rgba(255,255,255,0.02);
 }
 .article:hover{ transform: translateY(-6px); box-shadow: 0 14px 30px rgba(0,0,0,0.6); }
-.article h3{margin:0 0 6px; font-size:1.05rem; color:#fff}
+.article h3{margin:0 0 6px; font-size:1.05rem; color:#fff'}
 .article time{display:block; color:var(--muted); font-size:0.85rem; margin-bottom:8px}
 .article p{color:var(--muted); margin:0}
 .info-section{padding:24px 40px; color:var(--muted)}
