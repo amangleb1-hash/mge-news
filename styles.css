@@ -28,22 +28,23 @@ header{
 .main-nav a{color:var(--muted); margin-left:18px; text-decoration:none}
 .main-nav a:hover{color:#fff}
 .hero{
-  min-height:260px;
+  min-height:200px;
   display:flex;
   align-items:center;
   background-image: radial-gradient(circle at 20% 20%, rgba(184,58,58,0.06), transparent 10%), linear-gradient(90deg,#232427, #0b0c0d);
-  padding:32px 40px;
+  padding:24px 40px;
 }
 .hero-inner{max-width:880px}
-.hero h1{font-size:2rem; margin:0 0 8px; color:#fff}
+.hero h1{font-size:1.6rem; margin:0 0 8px; color:#fff}
 .hero .lead{color:var(--muted); font-size:1rem; max-width:60ch}
-.news-section{padding:28px 40px}
-.news-section h2{margin:0 0 16px; font-size:1.3rem}
-.articles-list{display:flex; flex-direction:column; gap:14px}
+.declaration{padding:16px 40px; background: linear-gradient(90deg, rgba(255,255,255,0.01), transparent); color:var(--muted); font-size:0.95rem}
+.news-section{padding:24px 40px}
+.news-section h2{margin:0 0 12px; font-size:1.2rem}
+.articles-list{display:flex; flex-direction:column; gap:12px}
 .article{
   background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.14));
   border-radius:10px;
-  padding:18px;
+  padding:16px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.45);
   cursor:pointer;
   transition: transform 180ms ease, box-shadow 180ms ease;
@@ -53,7 +54,7 @@ header{
 .article h3{margin:0 0 6px; font-size:1.05rem; color:#fff}
 .article time{display:block; color:var(--muted); font-size:0.85rem; margin-bottom:8px}
 .article p{color:var(--muted); margin:0}
-.info-section{padding:28px 40px; color:var(--muted)}
+.info-section{padding:24px 40px; color:var(--muted)}
 .info-section ul{line-height:1.65}
 .modal{ display:none; position:fixed; inset:0; align-items:center; justify-content:center; z-index:2000; transition: opacity 220ms ease; }
 .modal[aria-hidden="false"]{ display:flex; animation: modal-fade 220ms ease; }
@@ -94,11 +95,11 @@ header{
   border-radius:8px;
 }
 .modal-close:hover{ background: rgba(255,255,255,0.02); color:#fff; }
-.modal h3{margin:0 0 8px; font-size:1.25rem; color:#fff}
+.modal h3{margin:0 0 8px; font-size:1.15rem; color:#fff}
 .modal time{display:block; color:var(--muted); margin-bottom:6px}
-footer{padding:20px 40px; color:var(--muted); text-align:center; font-size:0.9rem}
+footer{padding:16px 40px; color:var(--muted); text-align:center; font-size:0.9rem}
 @media (max-width:720px){
-  .hero h1{font-size:1.4rem}
+  .hero h1{font-size:1.2rem}
   .modal-panel{ padding:16px; border-radius:12px }
   .modal-body{ padding:12px }
 }
