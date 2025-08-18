@@ -1,10 +1,8 @@
-/* Базовые стили */
 :root{
   --bg:#0b0c0d;
   --card:#101214;
   --muted:#9aa0a6;
   --accent:#b83a3a;
-  --glass: rgba(255,255,255,0.03);
 }
 *{box-sizing:border-box}
 body{
@@ -16,8 +14,6 @@ body{
   -moz-osx-font-smoothing:grayscale;
   line-height:1.5;
 }
-
-/* Header */
 header{
   display:flex;
   align-items:center;
@@ -31,8 +27,6 @@ header{
 .logo{font-weight:700; font-size:1.05rem; letter-spacing:0.4px}
 .main-nav a{color:var(--muted); margin-left:18px; text-decoration:none}
 .main-nav a:hover{color:#fff}
-
-/* Hero */
 .hero{
   min-height:260px;
   display:flex;
@@ -43,13 +37,9 @@ header{
 .hero-inner{max-width:880px}
 .hero h1{font-size:2rem; margin:0 0 8px; color:#fff}
 .hero .lead{color:var(--muted); font-size:1rem; max-width:60ch}
-
-/* Новости - список статей */
 .news-section{padding:28px 40px}
 .news-section h2{margin:0 0 16px; font-size:1.3rem}
 .articles-list{display:flex; flex-direction:column; gap:14px}
-
-/* Обычная карточка статьи */
 .article{
   background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.14));
   border-radius:10px;
@@ -63,18 +53,12 @@ header{
 .article h3{margin:0 0 6px; font-size:1.05rem; color:#fff}
 .article time{display:block; color:var(--muted); font-size:0.85rem; margin-bottom:8px}
 .article p{color:var(--muted); margin:0}
-
-/* Info section */
 .info-section{padding:28px 40px; color:var(--muted)}
 .info-section ul{line-height:1.65}
-
-/* Modal стили - тёмная плашка с закруглениями */
 .modal{ display:none; position:fixed; inset:0; align-items:center; justify-content:center; z-index:2000; transition: opacity 220ms ease; }
 .modal[aria-hidden="false"]{ display:flex; animation: modal-fade 220ms ease; }
 @keyframes modal-fade { from { opacity:0 } to { opacity:1 } }
-
 .modal-backdrop{ position:absolute; inset:0; background:rgba(0,0,0,0.6); backdrop-filter: blur(3px); }
-
 .modal-panel{
   position:relative;
   width:min(920px, 94%);
@@ -87,8 +71,6 @@ header{
   border: 1px solid rgba(255,255,255,0.04);
   transform: translateY(6px);
 }
-
-/* Если нужно, можно добавить декоративную плашку внутри модалки */
 .modal-body{
   background: rgba(6,8,10,0.6);
   padding:16px;
@@ -99,8 +81,6 @@ header{
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
   margin-top:12px;
 }
-
-/* Кнопка закрытия */
 .modal-close{
   position:absolute;
   right:14px;
@@ -114,11 +94,9 @@ header{
   border-radius:8px;
 }
 .modal-close:hover{ background: rgba(255,255,255,0.02); color:#fff; }
-
 .modal h3{margin:0 0 8px; font-size:1.25rem; color:#fff}
 .modal time{display:block; color:var(--muted); margin-bottom:6px}
-
-/* Responsive */
+footer{padding:20px 40px; color:var(--muted); text-align:center; font-size:0.9rem}
 @media (max-width:720px){
   .hero h1{font-size:1.4rem}
   .modal-panel{ padding:16px; border-radius:12px }
