@@ -2,19 +2,23 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Политические новости</title>
+    <title>Все статьи</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>Политические новости</h1>
+        <h1>Все статьи</h1>
     </header>
     <main>
         <div class="article-preview" onclick="openArticle('Статья 1', 'Текст статьи 1...')">
             <h2>Статья 1</h2>
             <p>Краткое описание статьи...</p>
         </div>
-        <a href="all-articles.html" class="news-button">Все статьи</a>
+        <div class="article-preview" onclick="openArticle('Статья 2', 'Текст статьи 2...')">
+            <h2>Статья 2</h2>
+            <p>Краткое описание статьи...</p>
+        </div>
+        <a href="index.html" class="news-button">Вернуться на главную</a>
     </main>
 
     <div id="article-modal" class="modal">
