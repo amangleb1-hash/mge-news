@@ -1,15 +1,6 @@
-// Скрипт с запасным (fallback) набором новостей — если fetch не сработает, показываем локальные новости
+// Скрипт использующий встроенные данные NEWS_DATA — гарантирует отображение новостей без fetch
 document.addEventListener('DOMContentLoaded', () => {
-  const articlesContainer = document.getElementById('articles');
-  const modal = document.getElementById('modal');
-  const modalBackdrop = document.getElementById('modal-backdrop');
-  const modalClose = document.getElementById('modal-close');
-  const modalTitle = document.getElementById('modal-title');
-  const modalDate = document.getElementById('modal-date');
-  const modalBody = document.getElementById('modal-body');
-
-  // Запасные новости (те же, что были в первой версии)
-  const fallbackNews = [
+  const NEWS_DATA = [
     {
       "title": "Восстание фурри в МГЕ подавлено",
       "date": "2025-08-15",
@@ -24,8 +15,21 @@ document.addEventListener('DOMContentLoaded', () => {
       "title": "Союзники проводят совместные учения",
       "date": "2025-08-01",
       "text": "Сообщается, что армии МГЕ, Сухариков и Бульбазаврии проводят масштабные учения на границе с Кириешками. Официально это демонстрация силы и готовности к обороне. Жители приграничных городов эвакуируются, напряжение растёт."
+    },
+    {
+      "title": "Президент Кириешек Михаил сделал заявление",
+      "date": "2025-08-18",
+      "text": "Президент Кириешек Михаил выступил с обращением, где подтвердил своё участие в последних событиях: он отметил, что лично оказывал поддержку в подавлении восстания и помогал союзным силам. В речи Михаил также заявил, что государства Огурцы и Аксолотли фактически находятся в вассальной зависимости от Кириешек. Завершая выступление, он сообщил о намерении в скором времени покинуть страну, что вызвало широкий резонанс среди политиков и жителей региона. (Аудиофайлы игнорируются.)"
     }
   ];
+
+  const articlesContainer = document.getElementById('articles');
+  const modal = document.getElementById('modal');
+  const modalBackdrop = document.getElementById('modal-backdrop');
+  const modalClose = document.getElementById('modal-close');
+  const modalTitle = document.getElementById('modal-title');
+  const modalDate = document.getElementById('modal-date');
+  const modalBody = document.getElementById('modal-body');
 
   function excerpt(text, n = 180){
     if(text.length <= n) return text;
@@ -75,21 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Попытка загрузить news.json; при ошибке используем fallbackNews
-  fetch('news.json')
-    .then(r => {
-      if(!r.ok) throw new Error('Network response was not ok');
-      return r.json();
-    })
-    .then(data => {
-      if(!Array.isArray(data) || data.length === 0){
-        renderArticles(fallbackNews);
-      } else {
-        renderArticles(data);
-      }
-    })
-    .catch(err => {
-      console.error('Ошибка загрузки новостей, используем локальные:', err);
-      renderArticles(fallbackNews);
-    });
+  // Render embedded news immediately
+  renderArticles(NEWS_DATA);
 });
