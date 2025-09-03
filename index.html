@@ -1,30 +1,69 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Политические новости</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Новости из мира политики</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <header>
-        <h1>Политические новости</h1>
-    </header>
-    <main>
-        <div class="article-preview" onclick="openArticle('Статья 1', 'Текст статьи 1...')">
-            <h2>Статья 1</h2>
-            <p>Краткое описание статьи...</p>
-        </div>
-        <a href="all-articles.html" class="news-button">Все статьи</a>
-    </main>
+  <header>
+    <div class="logo">Новости из мира политики</div>
+    <nav class="main-nav">
+      <a href="#news">Последние новости</a>
+      <a href="all_articles.html">Все статьи</a>
+      <a href="#info">Справка о странах</a>
+    </nav>
+  </header>
 
-    <div id="article-modal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeArticle()">&times;</span>
-            <h2 id="modal-title"></h2>
-            <p id="modal-text"></p>
-        </div>
+  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <h1>Новости из мира политики — оперативные сводки</h1>
+        <p class="lead">Оперативные сводки, аналитика и справки о ходе конфликта.</p>
+      </div>
+    </section>
+
+    <section id="declaration" class="declaration">
+      <p><strong>Заявление редакции:</strong> сайт независим и нейтрален. Его создатели — по одному жителю от каждой из 7 стран (МГЕ, Кириешки, Сухарики, Бульбазаврия, Огурцы, Аксолотли, Помидоры).</p>
+    </section>
+
+    <section id="news" class="news-section">
+      <h2>Последние новости</h2>
+      <div id="articles" class="articles-list">
+        <!-- Показываем только 3 последние новости -->
+      </div>
+      <p style="margin-top:12px"><a class="button-link" href="all_articles.html">Все статьи</a></p>
+    </section>
+
+    <section id="info" class="info-section">
+      <h2>Справка о странах и альянсах</h2>
+      <ul>
+        <li><strong>МГЕ</strong> – фашистско-либеральная империя, главный участник альянса.</li>
+        <li><strong>Сухарики</strong> – республика нейтралитета, союзник МГЕ и Бульбазаврии.</li>
+        <li><strong>Бульбазаврия</strong> – нейтральное государство, союзник, планирует сменить название.</li>
+        <li><strong>Кириешки</strong> – Социал-демократическое государство. Президент — Михаил.</li>
+        <li><strong>Огурцы</strong>, <strong>Аксолотли</strong>, <strong>Помидоры</strong> – мелкие государства региона.</li>
+      </ul>
+      <p><em>Альянс:</em> МГЕ, Сухарики, Бульбазаврия.</p>
+    </section>
+  </main>
+
+  <footer>
+    <small>© Новости из мира политики — независимый и нейтральный ресурс</small>
+  </footer>
+
+  <!-- Modal -->
+  <div id="modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+    <div class="modal-panel" role="document" aria-labelledby="modal-title" aria-describedby="modal-body">
+      <button id="modal-close" class="modal-close" aria-label="Закрыть">✕</button>
+      <h3 id="modal-title"></h3>
+      <time id="modal-date"></time>
+      <div id="modal-body" class="modal-body"></div>
     </div>
+  </div>
 
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
